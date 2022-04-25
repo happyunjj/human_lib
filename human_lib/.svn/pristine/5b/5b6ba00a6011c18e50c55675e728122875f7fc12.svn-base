@@ -1,0 +1,56 @@
+package shop.j980108.controller;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import lombok.Getter;
+import lombok.extern.log4j.Log4j;
+import shop.j980108.domain.MemberVo;
+import shop.j980108.service.MemberService;
+import shop.j980108.service.MemberServiceImpl;
+
+@Controller @Log4j
+@RequestMapping("/member")
+public class MemberController {
+	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
+	
+	@Autowired
+	private MemberService memberservice;
+	@Autowired
+	private MemberServiceImpl memberserviceimpl;
+	
+	//회원가입 get
+	@RequestMapping(value = "/terms", method = RequestMethod.GET)
+	public void getmemberJoin() throws Exception{
+		logger.info("이용약관");
+	}
+	
+	//회원가입 post
+	@RequestMapping(value = "/join", method = RequestMethod.POST)
+	public String postmemberJoin(MemberVo member) throws Exception{
+		logger.info("회원가입");
+		
+		memberservice.memberJoin(member);
+		
+		return "redirect:/common/index";
+	}
+	
+	//로그인 get
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String login(String error, Model model){
+		log.info("error : " + error);
+		
+		if(error != null){
+			model.addAttribute("error", "Login error check your accout");
+		}
+		return "/member/login";
+	}
+	
+}

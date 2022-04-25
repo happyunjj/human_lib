@@ -1,0 +1,10 @@
+package shop.j980108.service;
+
+import shop.j980108.domain.MemberVo;
+
+public interface MemberService {
+	void memberJoin(MemberVo member);
+	
+	int memberLogin(MemberVo member);
+
+}

@@ -1,0 +1,61 @@
+package shop.j980108.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j;
+import shop.j980108.domain.Criteria;
+import shop.j980108.domain.LoansVo;
+import shop.j980108.domain.PageDTO;
+import shop.j980108.service.LoansService;
+
+/**
+ * @author 박인영
+ * @date 2021-10-26 ~ 
+ * @name 대출 Controller
+ */
+@Controller
+@Log4j
+@RequestMapping("loans/*")
+@AllArgsConstructor
+public class LoansController {
+
+	private LoansService service;
+
+	/** 소장 도서 정보(possession) 1건 조회 */
+	@GetMapping("reserveloans")
+	public void getPossession(@RequestParam("bkno") Long bkno, Model model) {
+		model.addAttribute("possession",service.getPessession(bkno));
+	}
+	
+	/** 대출예약 <br>
+	 * X (1) 회원만 대출예약이 가능하다. <br>
+	 * X (2) 패널티를 받지 않는 회원만 대출예약이 가능하다. <br>
+	 * X (3) 현재 대출/대출예약 중인 도서수의 합계가 5권을 초과할 수 없다. <br>
+	 * X (4) 대출가능 도서만 대출예약이 가능하다. <br>
+	 * (5) 대출예약시 대출테이블에 튜플이 추가된다. <br>
+	 * (6) 소장도서의 상태가 예약으로 변경된다. <br>
+	 * (7) 회원의 대출중도서수 합계가 1 증가한다. <br>
+	 * X (8) 대출예약 확인문자가 발송된다. <br>
+	 * X (9) 문자발송 성공시 문자발송 테이블에 튜플이 추가된다.
+	 */  
+	@PostMapping("reserveloans")
+	public String reserveLoans(@RequestBody LoansVo loansVo) {
+		service.reserveLoans(loansVo);
+		return "success";
+	}
+	
+	/** 대출 예약 현황 리스트 조회 */
+	@GetMapping("loansreservationlist")
+	public void loansReservationList(Model model, Criteria cri) {
+		model.addAttribute("list", service.getLoansReservationList(cri)); 
+	    model.addAttribute("page", new PageDTO(service.getLoansReservationTotalCount(cri),cri));
+	}
+}

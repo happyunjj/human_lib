@@ -1,0 +1,37 @@
+package shop.j980108.controller;
+
+import java.util.List;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j;
+import shop.j980108.domain.SeatVo;
+import shop.j980108.service.SeatService;
+
+/**
+ * @author 조윤정
+ * @date 2021-10-27 ~
+ * @name 자리 컨트롤러
+ */
+
+@Controller
+@Log4j
+@RequestMapping("seat/*")
+@AllArgsConstructor
+public class SeatController {
+	private SeatService service;
+	
+	 @GetMapping("list")
+	   public void list(Model model){
+	      log.info("seat.list");
+	   }
+	 
+		@GetMapping("getSeats")
+		public @ResponseBody List<SeatVo> getSeats(SeatVo vo) {
+			return service.getList(vo);
+		}
+}

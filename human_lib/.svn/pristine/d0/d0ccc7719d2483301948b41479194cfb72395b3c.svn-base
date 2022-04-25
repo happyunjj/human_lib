@@ -1,0 +1,62 @@
+package shop.j980108.controller;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import shop.j980108.domain.MemberVo;
+import shop.j980108.service.MemberService;
+import shop.j980108.service.MemberServiceImpl;
+
+@Controller
+@RequestMapping("/member")
+public class MemberController {
+	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
+	
+	@Autowired
+	private MemberService memberservice;
+	@Autowired
+	private MemberServiceImpl memberserviceimpl;
+	
+	//회원가입 get
+	@GetMapping("terms")
+	public void getTerms() throws Exception{
+		logger.info("회원가입약관");
+	}
+	
+	//회원가입 post
+	@PostMapping("terms")
+	public String postmemberJoin(MemberVo member) throws Exception{
+		logger.info("가입이동");
+		
+		memberservice.memberJoin(member);
+		
+		return "redirect:/member/join";
+	}
+	
+	//회원가입 get
+	@GetMapping("join")
+	public void getmemberJoin() throws Exception{
+		logger.info("회원가입");
+	}
+	
+	//프로필 get
+	@GetMapping("profile")
+	public void getProfile() throws Exception{
+		logger.info("프로필");
+	}	
+	
+	//프로필 post
+	@PostMapping("profile")
+	public String postProfile(MemberVo member) throws Exception{
+		logger.info("프로필정보수정");
+			
+		memberservice.memberJoin(member);
+			
+		return "redirect:/member/profile";
+	}
+}

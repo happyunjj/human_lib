@@ -1,0 +1,22 @@
+package shop.j980108.mapper;
+
+import java.util.Map;
+
+import shop.j980108.domain.MemberVo;
+
+public interface MemberMapper {
+	void memberJoin(MemberVo member) throws Exception;
+	int memberLogin(MemberVo member) throws Exception;
+	void memberJoin(Map<String, Object> map);
+	void authJoin(Map<String, Object> map);
+	MemberVo read(String userid);
+	
+	MemberVo login(MemberVo member);
+	
+	
+	/** 회원의 대출중 도서수(loansCnt) 변경
+	 * @author 박인영
+	 * @date 2021-11-01
+	 */
+	void updateMemberLoansCnt(MemberVo member);
+}

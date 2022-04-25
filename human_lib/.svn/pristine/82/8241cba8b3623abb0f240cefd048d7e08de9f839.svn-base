@@ -1,0 +1,26 @@
+/**
+ * @author 박인영
+ * @date 2021-10-29 ~ 
+ * @name 대출 관련 비동기 기능
+ */
+var loansService = (function() { 
+
+	function reserveLoans(loans, callback) {
+		console.log("함수실행");
+		console.log(loans);
+		$.ajax({
+		    type : "post",
+			url : "/loans/reserveloans",
+			data : JSON.stringify(loans),
+			contentType : "application/json; charset=utf-8",
+            success : function(data) {
+                if(callback)
+                callback(data);
+            }
+		})
+	}
+
+    return {
+    	reserveLoans:reserveLoans
+    } 
+})();

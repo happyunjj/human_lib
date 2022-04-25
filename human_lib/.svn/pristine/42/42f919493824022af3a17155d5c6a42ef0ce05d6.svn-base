@@ -1,0 +1,42 @@
+package shop.j980108.mapper;
+
+import java.util.List;
+
+import shop.j980108.domain.Criteria;
+import shop.j980108.domain.LoansVo;
+import shop.j980108.domain.PossessionVo;
+
+/**
+ * @author 박인영
+ * @date 2021-10-19 ~ 
+ * @name 대출 Mapper
+ */
+public interface LoansMapper {
+	
+	/** 도서번호(bkno)로 소장 도서 정보(possession) 조회 */
+	PossessionVo getPossession(Long bkno);
+	/** 대출테이블에 대출예약 관련 정보(대출번호, 대출예약일, 대출만기일, 상태, 도서번호, 아이디) 입력 */
+	void insertLoans(LoansVo loans);
+	/** 소장도서의 상태(Possession.status) 대출가능(0)에서 대출예약중(1)으로 갱신 */
+	void updatePossession(Long bkno);
+	/** 회원의 대출중 도서수(Member.loansCnt) 1 증가 */
+	void updateLoansCnt(String id);
+	
+	List<LoansVo> getLoansReservationList(Criteria cri);
+	int getLoansReservationTotalCount(Criteria cri);
+	
+	
+	
+
+	/********************************** 대출 예약 **********************************/
+	/** @author 박인영 @date 2021-10-19 ~ 2021-10-20 @name 대출 Mapper            **/
+	
+	/** 회원의 연체 패널티(Penalty.prDays) 잔여일수가 있는지 조회 */
+	String selectPenalty(String id);
+	/** 회원의 대출중 도서수(Member.loansCnt) 조회 */
+	int selectLoansCnt(String id);
+	/** 대출예약하려는 도서의 상태(Possession.status) 조회 */
+	int selectPossessionStatus(Long bkno);
+
+	
+}

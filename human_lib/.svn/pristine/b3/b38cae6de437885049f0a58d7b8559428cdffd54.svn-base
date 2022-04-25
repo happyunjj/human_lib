@@ -1,0 +1,345 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html lang="ko" class="html">
+<head>
+	<jsp:include page="../includes/head.jsp"></jsp:include>
+</head>
+<body>
+	<jsp:include page="../includes/header.jsp"></jsp:include>
+        <div class="container">
+        
+        <div class="row bg-primary" id="skies">
+            <div class="col-12">
+            </div>
+        </div>
+        <div class="row col-10 mx-auto bg-danger" id="mainSec">
+            <div class="col-lg-3 col-12" id="progress">
+                <div class="vprogress d-none d-lg-block">
+                    <div class="circle bg-primary"></div>
+                    <div class="circle bg-primary"></div>
+                    <div class="circle bg-primary"></div>      
+                </div>
+                <div class="hprogress d-lg-none my-3">
+                    <div class="circle bg-primary my-2"></div>
+                    <div class="circle bg-primary my-2"></div>
+                    <div class="circle bg-primary my-2"></div>      
+                </div>
+            </div>
+            <div class="col-lg-9 col-12 my-8">
+                <div class="dropdown">
+                    <button type="button" class="btn btn-primary dropdown-toggle mt-4" data-toggle="dropdown">
+                      원하시는 시간대를 선택해주세요.
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">10:00-11:00</a>
+                        <a class="dropdown-item" href="#">11:00-12:00</a>
+                        <a class="dropdown-item" href="#">12:00-13:00</a>
+                        <a class="dropdown-item" href="#">13:00-14:00</a>
+                        <a class="dropdown-item" href="#">14:00-15:00</a>
+                        <a class="dropdown-item" href="#">15:00-16:00</a>
+                        <a class="dropdown-item" href="#">16:00-17:00</a>
+                        <a class="dropdown-item" href="#">17:00-18:00</a>
+                        <a class="dropdown-item" href="#">18:00-19:00</a>
+                        <a class="dropdown-item" href="#">19:00-20:00</a>
+                        <a class="dropdown-item" href="#">20:00-21:00</a>
+                        <a class="dropdown-item" href="#">21:00-22:00</a>
+                    </div>
+                </div>
+                <form>
+                    <div class="revSec bg-primary my-4 p-1 col-11 mx-auto">
+                        <div data-toggle="buttons">
+                            <div class="row my-3">
+                                <div class="col-1 ml-3">
+                                    <label class="btn btn-warning w-100 py-2">
+                                        <input type="radio" name="seat" value="1">01
+                                     </label>
+                                </div>
+                                <div class="col-1 col-offset-1 mx-3"></div>
+                                <div class="col-1 col-offset-1 mr-3"></div>
+                                <div class="col-1 col-offset-1 mr-3"></div>
+                                <div class="col-1 col-offset-1 mr-3"></div>
+                                <div class="col-1 col-offset-1 mr-3"></div>
+                                <div class="col-1 col-offset-1 mr-3"></div>
+                                <div class="col-1 col-offset-1 mr-3"></div>
+                                <div class="col-1 col-offset-1 mr-3"></div>
+                                <div class="col-1 col-offset-1 mr-3"></div>
+                                <div class="col-1 col-offset-1 mr-3"></div>
+                                <div class="col-1 col-offset-1 mr-3"></div>
+                            </div>
+                            <div class="row my-3">
+                                <div class="col-1 ml-3">
+                                    <label class="btn btn-warning w-100 py-2">
+                                        <input type="radio" name="seat" value="2">02
+                                     </label>
+                                </div>
+                                <div class="col-1 col-offset-1 mx-3"></div>
+                                <div class="col-1 col-offset-1 mr-3"></div>
+                                <div class="col-1 col-offset-1 mr-3"></div>
+                                <div class="col-1 col-offset-1 mr-3"></div>
+                                <div class="col-1 col-offset-1 mr-3"></div>
+                                <div class="col-1 col-offset-1 mr-3"></div>
+                                <div class="col-1 col-offset-1 mr-3"></div>
+                                <div class="col-1 col-offset-1 mr-3"></div>
+                                <div class="col-1 col-offset-1 mr-3"></div>
+                                <div class="col-1 col-offset-1 mr-3"></div>
+                                <div class="col-1 col-offset-1 mr-3"></div>
+                            </div>
+                            <div class="row my-3">
+                                <div class="col-1 ml-3">
+                                    <label class="btn btn-warning w-100 py-2">
+                                        <input type="radio" name="seat" value="3">03
+                                     </label>
+                                </div>
+                                <div class="col-1 col-offset-1 mx-3"></div>
+                                <div class="col-1 col-offset-1 mr-3"></div>
+                                <div class="col-1 mr-3">
+                                    <label class="btn btn-warning w-100 mr-3 py-2">
+                                        <input type="radio" name="seat" value="16">16
+                                     </label>
+                                </div>
+                                <div class="col-1 mr-3">
+                                    <label class="btn btn-warning w-100 mr-3 py-2">
+                                        <input type="radio" name="seat" value="17">17
+                                     </label>
+                                </div>
+                                <div class="col-1 col-offset-1 mr-3"></div>
+                                <div class="col-1 col-offset-1 mr-3"></div>
+                                <div class="col-1 mr-3">
+                                    <label class="btn btn-warning w-100 mr-3 py-2">
+                                        <input type="radio" name="seat" value="20">20
+                                     </label>
+                                </div>
+                                <div class="col-1 mr-3">
+                                    <label class="btn btn-warning w-100 mr-3 py-2">
+                                        <input type="radio" name="seat" value="21">21
+                                     </label>
+                                </div>
+                                <div class="col-1 mr-3">
+                                    <label class="btn btn-warning w-100 mr-3 py-2">
+                                        <input type="radio" name="seat" value="22">22
+                                     </label>
+                                </div>
+                                <div class="col-1 col-offset-1 mr-3"></div>
+                                <div class="col-1 col-offset-1 mr-3"></div>
+                            </div>
+                            <div class="row my-3">
+                                <div class="col-1 ml-3">
+                                    <label class="btn btn-warning w-100 py-2">
+                                        <input type="radio" name="seat" value="4">04
+                                     </label>
+                                </div>
+                                <div class="col-1 col-offset-1 mx-3"></div>
+                                <div class="col-1 col-offset-1 mr-3"></div>
+                                <div class="col-1 mr-3">
+                                    <label class="btn btn-warning w-100 mr-3 py-2">
+                                        <input type="radio" name="seat" value="18">18
+                                     </label>
+                                </div>
+                                <div class="col-1 mr-3">
+                                    <label class="btn btn-warning w-100 mr-3 py-2">
+                                        <input type="radio" name="seat" value="19">19
+                                     </label>
+                                </div>
+                                <div class="col-1 col-offset-1 mr-3"></div>
+                                <div class="col-1 col-offset-1 mr-3"></div>
+                                <div class="col-1 mr-3">
+                                    <label class="btn btn-warning w-100 mr-3 py-2">
+                                        <input type="radio" name="seat" value="23">23
+                                     </label>
+                                </div>
+                                <div class="col-1 mr-3">
+                                    <label class="btn btn-warning w-100 mr-3 py-2">
+                                        <input type="radio" name="seat" value="24">24
+                                    </label>
+                                </div>
+                                <div class="col-1 mr-3">
+                                    <label class="btn btn-warning w-100 mr-3 py-2">
+                                        <input type="radio" name="seat" value="25">25
+                                    </label>
+                                </div>
+                                <div class="col-1 col-offset-1 mr-3"></div>
+                                <div class="col-1 col-offset-1 mr-3"></div>
+                            </div>
+                            <div class="row my-3 mr-3">
+                                <div class="col-1 ml-3">
+                                    <label class="btn btn-warning w-100 py-2">
+                                        <input type="radio" name="seat" value="5">05
+                                     </label>
+                                </div>
+                                <div class="col-1 col-offset-1 mx-3"></div>
+                                <div class="col-1 col-offset-1 mr-3"></div>
+                                <div class="col-1 col-offset-1 mr-3"></div>
+                                <div class="col-1 col-offset-1 mr-3"></div>
+                                <div class="col-1 col-offset-1 mr-3"></div>
+                                <div class="col-1 col-offset-1 mr-3"></div>
+                                <div class="col-1 col-offset-1 mr-3"></div>
+                                <div class="col-1 col-offset-1 mr-3"></div>
+                                <div class="col-1 col-offset-1 mr-3"></div>
+                                <div class="col-1 col-offset-1 mr-3"></div>
+                                <div class="col-1 col-offset-1 mr-3"></div>
+                            </div>
+                            <div class="row my-3 mr-3">
+                                <div class="col-1 ml-3">
+                                    <label class="btn btn-warning w-100 py-2">
+                                        <input type="radio" name="seat" value="6">06
+                                     </label>
+                                </div>
+                                <div class="col-1 col-offset-1 mx-3"></div>
+                                <div class="col-1 col-offset-1 mr-3"></div>
+                                <div class="col-1 col-offset-1 mr-3"></div>
+                                <div class="col-1 col-offset-1 mr-3"></div>
+                                <div class="col-1 col-offset-1 mr-3"></div>
+                                <div class="col-1 col-offset-1 mr-3"></div>
+                                <div class="col-1 col-offset-1 mr-3"></div>
+                                <div class="col-1 col-offset-1 mr-3"></div>
+                                <div class="col-1 col-offset-1 mr-3"></div>
+                                <div class="col-1 col-offset-1 mr-3"></div>
+                                <div class="col-1 col-offset-1 mr-3"></div>
+                            </div>
+                            <div class="row my-3 mr-3">
+                                <div class="col-1 ml-3">
+                                    <label class="btn btn-warning w-100 py-2">
+                                        <input type="radio" name="seat" value="7">07
+                                     </label>
+                                </div>
+                                <div class="col-1 col-offset-1 mx-3"></div>
+                                <div class="col-1 col-offset-1 mr-3"></div>
+                                <div class="col-1 mr-3">
+                                    <label class="btn btn-warning w-100 py-2">
+                                        <input type="radio" name="seat" value="8">08
+                                     </label>
+                                </div>
+                                <div class="col-1 mr-3">
+                                    <label class="btn btn-warning w-100 py-2">
+                                        <input type="radio" name="seat" value="9">09
+                                     </label>
+                                </div>
+                                <div class="col-1 mr-3">
+                                    <label class="btn btn-warning w-100 py-2">
+                                        <input type="radio" name="seat" value="10">10
+                                     </label>
+                                </div>
+                                <div class="col-1 mr-3">
+                                    <label class="btn btn-warning w-100 py-2">
+                                        <input type="radio" name="seat" value="11">11
+                                     </label>
+                                </div>
+                                <div class="col-1 mr-3">
+                                    <label class="btn btn-warning w-100 py-2">
+                                        <input type="radio" name="seat" value="12">12
+                                     </label>
+                                </div>
+                                <div class="col-1 mr-3">
+                                    <label class="btn btn-warning w-100 py-2">
+                                        <input type="radio" name="seat" value="13">13
+                                     </label>
+                                </div>
+                                <div class="col-1 mr-3">
+                                    <label class="btn btn-warning w-100 py-2">
+                                        <input type="radio" name="seat" value="14">14
+                                    </label>
+                                </div>
+                                <div class="col-1 mr-3">
+                                    <label class="btn btn-warning w-100 py-2">
+                                        <input type="radio" name="seat" value="15">15
+                                    </label>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeTable bg-primary col-11 mb-3 mx-auto">
+                        <div data-toggle="buttons">
+                            <div class="row col-12 checks mx-auto">
+                                <div class="col-1 px-0 py-2">
+                                    <label class="btn btn-success w-100 py-2">
+                                        <input type="checkbox">
+                                    </label>
+                                </div>
+                                <div class="col-1 px-0 py-2">
+                                    <label class="btn btn-success w-100 py-2">
+                                        <input type="checkbox">
+                                    </label>
+                                </div>
+                                <div class="col-1 px-0 py-2">
+                                    <label class="btn btn-success w-100 py-2">
+                                        <input type="checkbox">
+                                    </label>
+                                </div>
+                                <div class="col-1 px-0 py-2">
+                                    <label class="btn btn-success w-100 py-2">
+                                        <input type="checkbox">
+                                    </label>
+                                </div>
+                                <div class="col-1 px-0 py-2">
+                                    <label class="btn btn-success w-100 py-2">
+                                        <input type="checkbox">
+                                    </label>
+                                </div>
+                                <div class="col-1 px-0 py-2">
+                                    <label class="btn btn-success w-100 py-2">
+                                        <input type="checkbox">
+                                    </label>
+                                </div>
+                                <div class="col-1 px-0 py-2">
+                                    <label class="btn btn-success w-100 py-2">
+                                        <input type="checkbox">
+                                    </label>
+                                </div>
+                                <div class="col-1 px-0 py-2">
+                                    <label class="btn btn-success w-100 py-2">
+                                        <input type="checkbox">
+                                    </label>
+                                </div>
+                                <div class="col-1 px-0 py-2">
+                                    <label class="btn btn-success w-100 py-2">
+                                        <input type="checkbox">
+                                    </label>
+                                </div>
+                                <div class="col-1 px-0 py-2">
+                                    <label class="btn btn-success w-100 py-2">
+                                        <input type="checkbox">
+                                    </label>
+                                </div>
+                                <div class="col-1  px-0 py-2">
+                                    <label class="btn btn-success w-100 py-2">
+                                        <input type="checkbox">
+                                    </label>
+                                </div>
+                                <div class="col-1 px-0 py-2">
+                                    <label class="btn btn-success w-100 py-2">
+                                        <input type="checkbox">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row col-11 mx-auto times">
+                            <div class="col">10</div>
+                            <div class="col">&nbsp;&nbsp;&nbsp;&nbsp;11</div>
+                            <div class="col">&nbsp;&nbsp;&nbsp;&nbsp;12</div>
+                            <div class="col">13</div>
+                            <div class="col">14</div>
+                            <div class="col">15</div>
+                            <div class="col">16</div>
+                            <div class="col">17</div>
+                            <div class="col">18</div>
+                            <div class="col">19</div>
+                            <div class="col">20</div>
+                            <div class="col">21</div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary mb-3">확인</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <jsp:include page="../includes/footer.jsp"></jsp:include>
+    <script>
+	     $(function() {
+	    	$.getJSON("/seat/getSeats/").done(function(data) {
+	        	console.log(data);
+	        })
+	     }) 
+    </script>
+</body>
+</html>

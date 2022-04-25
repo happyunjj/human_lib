@@ -1,0 +1,115 @@
+package shop.j980108.mapper;
+
+import java.util.List;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import lombok.Setter;
+import lombok.extern.log4j.Log4j;
+import shop.j980108.domain.Criteria;
+import shop.j980108.domain.LoansVo;
+
+/**
+ * @author 박인영
+ * @date 2021-10-19 ~ 
+ * @name 대출 Mapper Tests
+ */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
+@Log4j
+public class LoansMapperTests {
+	
+	@Autowired @Setter
+	private LoansMapper mapper;
+	
+	/** 도서번호(bkno)로 소장 도서 정보(possession) 조회 */
+	@Test
+	public void testGetPossession() {
+		log.info(mapper.getPossession(1L));
+	}
+	
+	// 공통 ------------------------------------------------------------------------------------
+	
+	// 대출 예약 신청
+	/** 대출테이블에 대출예약 관련 정보(대출번호, 대출예약일, 대출만기일, 상태, 도서번호, 아이디) 입력 */
+	@Test
+	public void testInsertLoans() {
+		LoansVo loans = new LoansVo();
+		loans.setBkno(1L);
+		loans.setId("아이디1");
+		mapper.insertLoans(loans);
+		log.info(loans);
+	}
+	/** 소장도서의 상태(Possession.status) 대출가능(0)에서 대출예약중(1)으로 갱신 */
+	@Test
+	public void testUpdatePossession() {
+		mapper.updatePossession(1L);
+		log.info(1L);
+	}
+	/** 회원의 대출중 도서수(Member.loansCnt) 1 증가 */
+	@Test
+	public void testUpdateLoansCnt() {
+		mapper.updateLoansCnt("아이디1");
+		log.info(1L);
+	}
+	
+	/** 대출 상태별 개수 조회 */
+	@Test
+	public void testGetLoansStatusTotalCount() {
+		log.info(mapper.getLoansStatusTotalCount(0));
+	}
+	
+	/** 대출 관련 상태 변경 */
+	@Test
+	public void testUpdateLoansReservationState() {
+		LoansVo loans = new LoansVo();
+		loans.setStatus(3);
+		loans.setLno(61L);
+		mapper.updateLoansReservationStatus(loans);
+	}
+	
+	// 관리자 ----------------------------------------------------------------------------------
+	
+	/** 대출 예약 신청 현황 리스트 (모든 회원) */
+	@Test
+	public void testGetLoansReservationRequestList() {
+		Criteria cri = new Criteria();
+		mapper.getLoansReservationRequestList(cri).forEach(log::info);;
+	}
+
+	/** 대출 예약 확정 현황 리스트 (모든 회원) */
+	@Test
+	public void testGetLoansReservationAcceptList() {
+		Criteria cri = new Criteria();
+		mapper.getLoansReservationAcceptList(cri).forEach(log::info);;
+	}
+	
+	
+	// 구현중 ----------------------------------------------------------------------------------
+	
+	/********************************** 대출 예약 **********************************/
+	/** @author 박인영 @date 2021-10-19 ~ 2021-10-20 @name 대출 Mapper            **/
+	
+	/** 회원의 연체 패널티(Penalty.prDays) 잔여일수가 있는지 조회 */
+	@Test
+	public void testSelectPenalty() {
+		log.info(mapper.selectPenalty("아이디1"));
+		
+	}
+	/** 회원의 대출중 도서수(Member.loansCnt) 조회 */
+	@Test
+	public void testSelectLoansCnt() {
+		log.info(mapper.selectLoansCnt("아이디1"));
+	}
+	/** 대출예약하려는 도서의 상태(Possession.status) 조회 */
+	@Test
+	public void testSelectPossessionStatus() {
+		log.info(mapper.selectPossessionStatus(1L));
+	}
+
+
+}

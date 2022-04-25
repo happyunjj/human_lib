@@ -1,0 +1,98 @@
+package shop.j980108.service;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import lombok.AllArgsConstructor;
+import shop.j980108.domain.Criteria;
+import shop.j980108.domain.LoansVo;
+import shop.j980108.domain.PossessionVo;
+import shop.j980108.mapper.LoansMapper;
+
+/**
+ * @author 박인영
+ * @date 2021-10-21 ~ 
+ * @name 대출 Service
+ */
+@Service
+@AllArgsConstructor
+public class LoansServiceImpl implements LoansService {
+	
+	private LoansMapper loansMapper;
+	
+	/** 도서번호(bkno)로 소장 도서 정보(possession) 조회 */
+	@Override
+	public PossessionVo getPossession(Long bkno) {
+		return loansMapper.getPossession(bkno);
+	}
+	
+	// 공통 ------------------------------------------------------------------------------------
+	
+	/** 대출예약 <br>
+	 * - 대출예약시 대출테이블에 튜플이 추가된다. <br>
+	 * - 소장도서의 상태가 예약으로 변경된다. <br>
+	 * - 회원의 대출중도서수 합계가 1 증가한다.
+	 */
+	@Override @Transactional
+	public void reserveLoans(LoansVo loansVo) {
+		loansMapper.insertLoans(loansVo);
+		loansMapper.updatePossession(loansVo.getBkno());
+		loansMapper.updateLoansCnt(loansVo.getId());
+	}
+	
+	/** 대출 상태별 개수 조회 */
+	@Override
+	public int getLoansStatusTotalCount(int Status) {
+		return loansMapper.getLoansStatusTotalCount(Status);
+	}
+	
+	/** 대출 관련 상태 변경 */
+	@Override
+	public void updateLoansReservationStatus(LoansVo loans) {
+		loansMapper.updateLoansReservationStatus(loans);
+	}
+	
+	// 관리자 ----------------------------------------------------------------------------------
+	
+	/** 대출 예약 신청 현황 리스트 (모든 회원) */
+	@Override
+	public List<LoansVo> getLoansReservationRequestList(Criteria cri) {
+		return loansMapper.getLoansReservationRequestList(cri);
+	}
+	
+	/** 대출 예약 확정 현황 리스트 (모든 회원) */
+	@Override
+	public List<LoansVo> getLoansReservationAcceptList(Criteria cri) {
+		return loansMapper.getLoansReservationAcceptList(cri);
+	}
+	
+	
+	
+	
+	
+	// 구현중 ----------------------------------------------------------------------------------
+	
+	/** 대출 또는 대출예약 가능 여부 확인<br>
+	 * - 패널티를 받지 않는 회원만 대출예약이 가능하다.<br>
+	 * - 현재 대출/대출예약 중인 도서의 합계가 5권을 초과할 수 없다.<br>
+	 * @author 박인영
+	 * @date 2021-10-25
+	 */
+	public String loansdisable(String id) {
+		/** 회원의 패널티 만기일 : Penalty Expiration Date */
+		String peDate = loansMapper.selectPenalty(id);
+		/** 회원의 대출/대출예약 중인 도서수 */
+		int loansCnt = loansMapper.selectLoansCnt(id);
+		//loansMapper.selectPossessionStatus(loansVo.getBkno());
+		if(peDate != null) {
+			return "지난 대출 연체로 인해 " + peDate + "까지 대출 및 대출예약이 불가능합니다."; 
+		}
+		else if(loansCnt >= 5 ) {
+			return "대출 및 대출예약 중인 총 도서수는 5권까지입니다.";
+		}
+		else return "대출가능";
+	}
+
+}

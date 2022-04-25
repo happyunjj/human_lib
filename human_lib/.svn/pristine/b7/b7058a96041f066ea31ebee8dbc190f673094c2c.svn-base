@@ -1,0 +1,17 @@
+package shop.j980108.service;
+
+import java.util.Map;
+
+import shop.j980108.domain.MemberVo;
+
+public interface MemberService {
+	void memberJoin(Map<String, Object> member) throws Exception;
+	
+	int memberLogin(MemberVo member) throws Exception;
+
+	MemberVo login(MemberVo member) throws Exception;
+	
+	void memberDelete(MemberVo member) throws Exception;
+	
+	void authJoin(Map<String, Object> member) throws Exception;
+}

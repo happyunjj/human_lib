@@ -1,0 +1,13 @@
+package shop.j980108.mapper;
+
+import java.util.Map;
+
+import shop.j980108.domain.MemberVo;
+
+public interface MemberMapper {
+	void memberJoin(MemberVo member);
+	int memberLogin(MemberVo member);
+	void memberJoin(Map<String, Object> map);
+	void authJoin(Map<String, Object> map);
+	MemberVo read(String userid);
+}

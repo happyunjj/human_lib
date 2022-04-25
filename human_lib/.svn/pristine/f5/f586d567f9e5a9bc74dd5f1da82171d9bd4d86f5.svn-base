@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="shop.j980108.mapper.LoansMapper">
+
+	<!-- 도서번호(bkno)로 소장 도서 정보(possession) 조회 -->
+  	<select id="getPossession" resultType="possession">
+ 		SELECT BKNO, TITLE, AUTHORS, TRANSLATORS, PUBLISHER, TO_CHAR(DATETIME, 'YYYY.MM.DD') AS DATETIME, THUMBNAIL, CONTENTS, PRICE, STATUS, ISBN
+		FROM TBL_POSSESSION
+		JOIN TBL_BOOK
+		USING(ISBN)
+		WHERE BKNO = #{bkno}
+ 	</select>
+ 	<!-- 대출테이블에 대출예약 정보(대출번호, 대출예약일, 대출만기일, 상태, 도서번호, 아이디) 입력-->
+ 	<insert id="insertLoans">
+ 		INSERT INTO TBL_LOANS (LNO, RDATE, REDATE, STATUS, BKNO, ID) 
+ 		VALUES (SEQ_LOANS.NEXTVAL, SYSDATE, SYSDATE+1, 0, #{bkno}, #{id})
+ 	</insert> 
+ 	<!-- 소장도서의 상태(Possession.status) 대출가능(0)에서 대출예약중(1)으로 갱신 -->
+ 	<update id="updatePossession">
+ 		UPDATE TBL_POSSESSION SET STATUS = 1 WHERE BKNO = #{bkno}
+ 	</update>
+ 	<!-- 회원의 대출중 도서수(Member.loansCnt) 1 증가 -->
+ 	<update id="updateLoansCnt">
+ 		UPDATE TBL_MEMBER SET LOANSCNT = LOANSCNT+1 WHERE ID = #{id}
+ 	</update> 
+ 
+ 
+ 
+  	<sql id="cri">
+		<trim prefix="(" suffix=") AND" prefixOverrides="OR">
+			<foreach collection="typeArr" item="type">
+			<trim prefix="OR">
+				<choose>
+					<when test="type == 'I'.toString()">
+						ID LIKE '%'||#{keyword}||'%'
+					</when>
+					<when test="type == 'S'.toString()">
+						STUDNO LIKE '%${keyword}%'
+					</when>
+					<when test="type == 'N'.toString()">
+						NAME LIKE '%${keyword}%'
+					</when>					
+				</choose>
+			</trim>
+			</foreach>
+		</trim>
+ 	</sql>
+  	<select id="getLoansReservationList" resultType="loans">
+		SELECT
+		    LNO, RDATE, REDATE, BKNO, TITLE, ID, STUDNO, NAME
+		FROM (
+		    SELECT
+		    	/*+ INDEX(TBL_LOANS PK_LOANS) */
+		       ROWNUM RN, L.LNO, TO_CHAR(L.RDATE, 'YYYY.MM.DD') AS RDATE, TO_CHAR(L.REDATE, 'YYYY.MM.DD') AS REDATE, L.BKNO, P.TITLE, L.ID, S.STUDNO, S.NAME
+		    FROM TBL_LOANS L
+		    JOIN (
+		        SELECT ID, STUDNO, NAME
+		        FROM TBL_STUDENT
+		        NATURAL JOIN TBL_MEMBER
+		    ) S
+		    ON L.ID = S.ID
+		    JOIN (
+		        SELECT BKNO, TITLE
+		        FROM TBL_POSSESSION
+		        NATURAL JOIN TBL_BOOK
+		    ) P
+		    ON L.BKNO = P.BKNO
+		    WHERE L.STATUS = 0
+		<include refid="cri" />
+			AND ROWNUM &lt;= #{pageNum} * #{amount}
+		)
+		WHERE RN &gt; (#{pageNum} - 1) * #{amount}
+ 	</select> 
+  	<select id="getLoansReservationTotalCount" resultType="int">
+  		SELECT COUNT(*) FROM TBL_LOANS 
+	<include refid="cri"/>
+		WHERE LNO > 0 AND STATUS = 0
+  	</select>
+ 
+ 
+ 	<!-- ******************************** 대출 예약 ******************************** -->
+ 	<!-- @author 박인영 @date 2021-10-19 ~ 2021-10-20 @name 대출 Mapper XML 파일     -->
+ 
+ 	<!-- 회원의 연체 패널티(Penalty.prDays) 잔여일수가 있는지 조회 : 잔여일 수가 남은 경우 언제까지 대출이 불가능한지 날짜 반환 -->
+ 	<select id="selectPenalty" resultType="string">
+ 		SELECT
+		    CASE 
+		        WHEN SUM(PRDAYS) = '' THEN 'NULL' 
+		        WHEN SUM(PRDAYS) = 0 THEN 'NULL'
+		        ELSE TO_CHAR(SYSDATE+SUM(PRDAYS), 'YYYY/MM/DD')     
+		    END
+		FROM TBL_PENALTY 
+		WHERE ID = #{id}
+ 	</select>
+ 	<!-- 회원의 대출중 도서수(Member.loansCnt) 조회 -->
+ 	<select id="selectLoansCnt" resultType="int">
+ 		SELECT LOANSCNT FROM TBL_MEMBER WHERE ID = #{id}
+ 	</select>
+ 	<!-- 대출예약하려는 도서의 상태(Possession.status) 조회 -->
+ 	<select id="selectPossessionStatus" resultType="int">
+ 		SELECT STATUS FROM TBL_POSSESSION WHERE BKNO = #{bkno}
+ 	</select>
+
+ 	
+ </mapper>

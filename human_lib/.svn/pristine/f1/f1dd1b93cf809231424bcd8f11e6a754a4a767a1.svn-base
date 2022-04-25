@@ -1,0 +1,16 @@
+package shop.j980108.service;
+
+import java.util.List;
+
+import shop.j980108.domain.ReplyCriteria;
+import shop.j980108.domain.ReplyVo;
+
+
+public interface ReplyService {
+	void register(ReplyVo vo);//트랜잭션
+	ReplyVo get(Long rno);
+	boolean modify(ReplyVo vo);
+	boolean remove(Long rno);
+	List<ReplyVo> getList(ReplyCriteria cri,Long bno);
+	
+}

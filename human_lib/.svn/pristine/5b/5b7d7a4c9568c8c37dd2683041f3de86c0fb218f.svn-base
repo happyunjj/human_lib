@@ -1,0 +1,35 @@
+package shop.j980108.service;
+
+import java.util.Map;
+
+import javax.inject.Inject;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import shop.j980108.domain.MemberVo;
+import shop.j980108.mapper.MemberMapper;
+
+@Service
+public class MemberServiceImpl implements MemberService{
+	@Inject MemberMapper mpr;
+	@Autowired
+	MemberMapper membermapper;
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public void memberJoin(MemberVo member) throws Exception{
+		mpr.memberJoin((Map<String, Object>) member);
+		membermapper.memberJoin(member);
+	}
+
+	@Override
+	public int memberLogin(MemberVo member) throws Exception{
+		return membermapper.memberLogin(member);
+	}
+
+	@Override
+	public MemberVo login(MemberVo member) throws Exception{
+		return membermapper.login(member);
+	}
+}

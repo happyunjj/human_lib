@@ -1,0 +1,68 @@
+package shop.j980108.mapper;
+
+import static org.junit.Assert.assertNotNull;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import javax.sql.DataSource;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import lombok.Setter;
+import lombok.extern.log4j.Log4j;
+import shop.j980108.domain.MemberVo;
+import shop.j980108.persistence.DataSourceTests;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
+@Log4j
+public class MemberMapperTests {
+   @Autowired @Setter
+   private MemberMapper memberMapper;
+   @Autowired @Setter
+   private PasswordEncoder pwencoder;
+   @Autowired @Setter
+   private DataSource ds;
+   
+   @Test
+   public void testRead() {
+      MemberVo vo = memberMapper.read("admin99");
+      log.info(vo);
+      vo.getAuths().forEach(log::info);
+   }
+   
+   @Test
+   public void testmemberJoin() throws Exception{
+	   MemberVo member = new MemberVo();
+	   
+	   String sql = "INSERT INTO TBL_MEMBER(ID, PWD, STUDNO, NAME, NICKNAME, PHONE, EMAIL, UUID)" +
+		"VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+	   
+	   Connection con = null;
+	   PreparedStatement pstmt = null;
+	   
+	   try{
+		   con = ds.getConnection();
+		   pstmt = con.prepareStatement(sql);
+		   pstmt.setString(2, pwencoder.encode("pw00"));
+		   pstmt.setString(1, "korea");
+		   pstmt.setInt(3, 10102);
+		   pstmt.setString(4, "애국가");
+		   pstmt.setString(5, "동해물과백두산");
+		   pstmt.setString(6, "010-1234-5678");
+		   pstmt.setString(7, "korea@naver.com");
+		   pstmt.setString(8, "#");
+		   
+		   pstmt.executeUpdate();
+	   }catch(SQLException e){
+		   e.printStackTrace();
+	   }   
+   }
+}
